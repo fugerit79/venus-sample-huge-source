@@ -29,7 +29,11 @@
         <docHandler id="fo-fop" info="fo" type="org.fugerit.java.doc.mod.fop.FreeMarkerFopTypeHandlerUTF8" />
         <!-- Type handler generating pdf -->
         <docHandler id="pdf-fop" info="pdf" type="org.fugerit.java.doc.mod.fop.PdfFopTypeHandler">
-            <docHandlerCustomConfig charset="UTF-8" fop-config-mode="classloader" fop-config-classloader-path="venus-sample-huge-source/fop-config.xml" fop-suppress-events="1"/>
+            <docHandlerCustomConfig charset="UTF-8"
+                                    fop-config-mode="classloader"
+                                    fop-config-classloader-path="venus-sample-huge-source/fop-config.xml"
+                                    fop-suppress-events="1"
+                                    pdf-ua-mode="PDF/UA-1"/>
         </docHandler>
     </docHandlerConfig>
 

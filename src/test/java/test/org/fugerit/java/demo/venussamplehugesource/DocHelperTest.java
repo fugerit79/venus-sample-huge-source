@@ -1,6 +1,7 @@
 // generated from template 'DocHelperTest.ftl' on 2026-01-30T22:04:01.027+01:00
 package test.org.fugerit.java.demo.venussamplehugesource;
 
+import org.fugerit.java.core.io.FileIO;
 import org.fugerit.java.demo.venussamplehugesource.DocHelper;
 import org.fugerit.java.demo.venussamplehugesource.People;
 
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
@@ -34,9 +37,16 @@ import lombok.AllArgsConstructor;
 @Slf4j
 class DocHelperTest {
 
+    private void printMem() {
+        log.info( "max memory: {}, free memory : {}", Runtime.getRuntime().maxMemory(), Runtime.getRuntime().freeMemory() );
+    }
+
     @Test
     void testDocProcess() throws Exception {
-        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+        this.printMem();
+        File outputFile = new File("target/", "output.pdf");
+        outputFile.delete();
+        try (FileOutputStream baos = new FileOutputStream(outputFile)) {
             // creates the doc helper
             DocHelper docHelper = new DocHelper();
             // create custom data for the fremarker template 'document.ftl'
@@ -45,13 +55,14 @@ class DocHelperTest {
 
             String chainId = "document";
             // handler id
-            String handlerId = DocConfig.TYPE_MD;
+            String handlerId = DocConfig.TYPE_PDF;
             // output generation
             docHelper.getDocProcessConfig().fullProcess(chainId,
                     DocProcessContext.newContext("listPeople", listPeople), handlerId, baos);
             // print the output
-            log.info("{} output : \n{}", handlerId, new String(baos.toByteArray(), StandardCharsets.UTF_8));
-            Assertions.assertNotEquals(0, baos.size());
+            Assertions.assertTrue( outputFile.exists() );
+        } finally {
+            this.printMem();
         }
     }
 

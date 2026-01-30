@@ -16,9 +16,12 @@
         https://venusdocs.fugerit.org/guide/#doc-format-entry-point
     -->
 
-    <#assign defaultTitle="My sample title XML">
+    <#assign defaultTitle="Demo Huge List">
 
     <metadata>
+        <!-- Margin for document : left;right;top;bottom -->
+        <info name="default-font-name">TitilliumWeb</info>
+        <info name="default-font-size">6</info>
         <!-- Margin for document : left;right;top;bottom -->
         <info name="margins">10;10;10;30</info>
         <!-- documenta meta information -->
@@ -35,23 +38,35 @@
         </footer-ext>
     </metadata>
     <body>
-    <para>${docTitle!defaultTitle}</para>
-    <table columns="3" colwidths="30;30;40"  width="100" id="data-table" padding="2">
+    <para>Sample huge list</para>
+    <table columns="6" colwidths="5;50;12;12;10;10"  width="100" id="data-table" padding="3">
         <row header="true">
-            <cell align="center"><para>Name</para></cell>
-            <cell align="center"><para>Surname</para></cell>
-            <cell align="center"><para>Title</para></cell>
+            <cell align="center" rowspan="2"><para>NUMBER</para></cell>
+            <cell align="center" rowspan="2"><para>NAME / SURNAME</para></cell>
+            <cell align="center" rowspan="2"><para>DOCUMENT ID</para></cell>
+            <cell align="center" rowspan="2"><para>SIGNATURE</para></cell>
+            <cell align="center" colspan="2"><para>NOTES</para></cell>
         </row>
-        <#if listPeople??>
-            <#list listPeople as current>
-                <row>
-                    <cell><para>${current.name}</para></cell>
-                    <cell><para>${current.surname}</para></cell>
-                    <cell><para>${current.title}</para></cell>
-                </row>
-            </#list>
-        </#if>
+        <row header="true">
+            <cell align="center"><para>From officer A</para></cell>
+            <cell align="center"><para>From officer B</para></cell>
+        </row>
+        <#list 1..100000 as i>
+        <row>
+            <cell><para>${i}</para></cell>
+            <cell>
+                <para>ALAN TURING</para>
+                <para>LONDON 25/05/1997</para>
+                <para>CAMDEN TOWN</para>
+            </cell>
+            <cell><para></para></cell>
+            <cell><para></para></cell>
+            <cell><para></para></cell>
+            <cell><para></para></cell>
+        </row>
+        </#list>
     </table>
+
     </body>
 
 </doc>
