@@ -27,7 +27,13 @@
         <docHandler id="asciidoc-fm" info="adoc" type="org.fugerit.java.doc.freemarker.asciidoc.FreeMarkerAsciidocTypeHandlerUTF8" />
         <!-- Type handler generating xls:fo style sheet -->
         <docHandler id="fo" info="fo" type="org.fugerit.java.doc.mod.fop.FreeMarkerFopTypeHandlerUTF8" />
-        <!-- Type handler generating pdf -->
+        <!-- Type handler generating pdf OpenPDF -->
+        <docHandler id="openpdf" info="pdf" type="org.fugerit.java.doc.mod.openpdf.ext.PdfTypeHandler">
+            <docHandlerCustomConfig charset="UTF-8">
+                <font name="TitilliumWeb" path="font/TitilliumWeb-Regular.ttf"/>
+            </docHandlerCustomConfig>
+        </docHandler>
+        <!-- Type handler generating pdf with Apache FOP -->
         <docHandler id="pdf-fop-ua" info="pdf" type="org.fugerit.java.doc.mod.fop.PdfFopTypeHandler">
             <docHandlerCustomConfig charset="UTF-8"
                                     fop-config-mode="classloader"

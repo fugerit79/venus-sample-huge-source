@@ -10,6 +10,18 @@ To run the test with specific resources, run for instance
 mvn test -DargLine="-Xms2g -Xmx4g"
 ```
 
+For instance to create a document with a 100,000 rows table with Apache FOP, PDF/UA-1
+
+```shell
+mvn test -DargLine="-Xms2g -Xmx4g" -DrowNumber=100000 -DhandlerType=pdf -DhandlerId=pdf-fop-ua
+```
+
+Or the same document with OpenPDF
+
+```shell
+mvn test -DargLine="-Xms2g -Xmx4g" -DrowNumber=100000 -DhandlerType=pdf -DhandlerId=openpdf
+```
+
 ## Additional parameters
 
 | parameter   | default        | note                                               |
@@ -20,8 +32,9 @@ mvn test -DargLine="-Xms2g -Xmx4g"
 
 ## handlerType / handlerId combination
 
-| handler type | handler id | note                         |
-|--------------|------------|------------------------------|
-| pdf          | pdf-fop-ua | Apache FOP PDF-UA            |
-| xml          | xml        | Fugerit venus doc xml source |
-| fo           | FO         | Apache FOP xsl:fo            | 
+| handler type | handler id            | note                         |
+|--------------|-----------------------|------------------------------|
+| pdf          | 'pdf' or 'pdf-fop-ua' | Apache FOP PDF-UA            |
+| pdf          | 'openpdf'             | OpenPDF (IText fork)         |
+| xml          | 'xml'                 | Fugerit venus doc xml source |
+| fo           | 'FO'                  | Apache FOP xsl:fo            | 

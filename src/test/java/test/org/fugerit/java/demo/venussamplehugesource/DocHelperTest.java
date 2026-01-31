@@ -62,7 +62,7 @@ class DocHelperTest {
         report.append( "\n row.number : " );
         report.append( rowNumber );
         log.info( "row number : {} ", rowNumber );
-        String fileNameBase = String.format( "output-%s-%s", rowNumber, handlerId );
+        String fileNameBase = String.format( "output-%s-%s", rowNumber, handlerId.replace("/", "-") );
         File outputFile = new File("target/", String.format( "%s.%s", fileNameBase, handlerType ) );
         File reportFile = new File("target/", String.format( "%s.%s", fileNameBase, "txt" ) );
         outputFile.delete();
