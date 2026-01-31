@@ -11,9 +11,7 @@ import org.fugerit.java.doc.base.process.DocProcessContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
@@ -37,32 +35,59 @@ import lombok.AllArgsConstructor;
 @Slf4j
 class DocHelperTest {
 
-    private void printMem() {
-        log.info( "max memory: {}, free memory : {}", Runtime.getRuntime().maxMemory(), Runtime.getRuntime().freeMemory() );
+    private static final String PARAM_ROW_NUMBER = "rowNumber";
+    private static final String PARAM_HANDLER_TYPE = "handlerType";
+    private static final String PARAM_HANDLER_ID = "handlerId";
+
+    private String getMem() {
+        return String.format( "max memory: %s, free memory : %s", Runtime.getRuntime().maxMemory(), Runtime.getRuntime().freeMemory() );
     }
 
     @Test
     void testDocProcess() throws Exception {
-        this.printMem();
-        File outputFile = new File("target/", "output.pdf");
+        StringBuilder report = new StringBuilder();
+        report.append( "-------------------- Fugerit Venus Doc sample huge source report (begin) --------------------------" );
+        String beginMemory = getMem();
+        log.info( beginMemory );
+        report.append( "\n memory status (begin) : " );
+        report.append( beginMemory );
+        // handler type / file
+        String handlerType = System.getProperty( PARAM_HANDLER_TYPE, DocConfig.TYPE_PDF);
+        String handlerId = System.getProperty( PARAM_HANDLER_ID, handlerType );
+        report.append( "\n handler type : " );
+        report.append( handlerType );
+        report.append( "\n handler id : " );
+        report.append( handlerId );
+        String rowNumber = System.getProperty( PARAM_ROW_NUMBER, "1000");
+        report.append( "\n row.number : " );
+        report.append( rowNumber );
+        log.info( "row number : {} ", rowNumber );
+        String fileNameBase = String.format( "output-%s-%s", rowNumber, handlerId );
+        File outputFile = new File("target/", String.format( "%s.%s", fileNameBase, handlerType ) );
+        File reportFile = new File("target/", String.format( "%s.%s", fileNameBase, "txt" ) );
         outputFile.delete();
+        report.append( "\n output file : " );
+        report.append( outputFile.getCanonicalPath() );
+        report.append( "\n report file : " );
+        report.append( reportFile.getCanonicalPath() );
         try (FileOutputStream baos = new FileOutputStream(outputFile)) {
             // creates the doc helper
             DocHelper docHelper = new DocHelper();
             // create custom data for the fremarker template 'document.ftl'
-            List<People> listPeople = Arrays.asList(
-                    new People("Luthien", "Tinuviel", "Queen"), new People("Thorin", "Oakshield", "King"));
-
             String chainId = "document";
-            // handler id
-            String handlerId = DocConfig.TYPE_PDF;
             // output generation
             docHelper.getDocProcessConfig().fullProcess(chainId,
-                    DocProcessContext.newContext("listPeople", listPeople), handlerId, baos);
+                    DocProcessContext.newContext( PARAM_ROW_NUMBER, Long.valueOf(rowNumber)), handlerId, baos);
             // print the output
             Assertions.assertTrue( outputFile.exists() );
         } finally {
-            this.printMem();
+            String endMemory = getMem();
+            log.info( endMemory );
+            report.append( "\n memory status (end) : " );
+            report.append( endMemory );
+            report.append( "\n-------------------- Fugerit Venus Doc sample huge source report (end) --------------------------\n" );
+            FileIO.writeString( report.toString(), reportFile );
+            log.info( "output file : {}, report file : {} \n\n{}", outputFile.getName(), reportFile.getName(), report );
         }
     }
 

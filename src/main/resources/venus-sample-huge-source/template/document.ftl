@@ -51,7 +51,7 @@
             <cell align="center"><para>From officer A</para></cell>
             <cell align="center"><para>From officer B</para></cell>
         </row>
-        <#list 1..100000 as i>
+        <#list 1..rowNumber as i>
         <row>
             <cell><para>${i}</para></cell>
             <cell>

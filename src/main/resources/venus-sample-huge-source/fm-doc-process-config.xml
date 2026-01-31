@@ -18,7 +18,7 @@
         <!-- Type handler for markdown format -->
         <docHandler id="md-ext" info="md" type="org.fugerit.java.doc.base.typehandler.markdown.SimpleMarkdownExtTypeHandler" />
         <!-- Type handler for xml format, generates the source xml:doc -->
-        <docHandler id="xml-doc" info="xml" type="org.fugerit.java.doc.base.typehandler.core.DocTypeHandlerCoreXMLUTF8" />
+        <docHandler id="xml" info="xml" type="org.fugerit.java.doc.base.typehandler.core.DocTypeHandlerCoreXMLUTF8" />
         <!-- Type handler for html using freemarker -->
         <docHandler id="html-fm" info="html" type="org.fugerit.java.doc.freemarker.html.FreeMarkerHtmlTypeHandlerEscapeUTF8" />
         <!-- Type handler for html using freemarker (fragment version, only generates body content no html or head part -->
@@ -26,9 +26,9 @@
         <!-- type handler for asciidoc using freemarker -->
         <docHandler id="asciidoc-fm" info="adoc" type="org.fugerit.java.doc.freemarker.asciidoc.FreeMarkerAsciidocTypeHandlerUTF8" />
         <!-- Type handler generating xls:fo style sheet -->
-        <docHandler id="fo-fop" info="fo" type="org.fugerit.java.doc.mod.fop.FreeMarkerFopTypeHandlerUTF8" />
+        <docHandler id="fo" info="fo" type="org.fugerit.java.doc.mod.fop.FreeMarkerFopTypeHandlerUTF8" />
         <!-- Type handler generating pdf -->
-        <docHandler id="pdf-fop" info="pdf" type="org.fugerit.java.doc.mod.fop.PdfFopTypeHandler">
+        <docHandler id="pdf-fop-ua" info="pdf" type="org.fugerit.java.doc.mod.fop.PdfFopTypeHandler">
             <docHandlerCustomConfig charset="UTF-8"
                                     fop-config-mode="classloader"
                                     fop-config-classloader-path="venus-sample-huge-source/fop-config.xml"
