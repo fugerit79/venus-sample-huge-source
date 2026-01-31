@@ -67,14 +67,15 @@ class DocHelperTest {
         report.append( outputFile.getCanonicalPath() );
         report.append( "\n report file : " );
         report.append( reportFile.getCanonicalPath() );
-        try (FileOutputStream baos = new FileOutputStream(outputFile)) {
+        try (FileOutputStream os = new FileOutputStream(outputFile)) {
             // creates the doc helper
             DocHelper docHelper = new DocHelper();
             // create custom data for the fremarker template 'document.ftl'
             String chainId = "document";
             // output generation
             docHelper.getDocProcessConfig().fullProcess(chainId,
-                    DocProcessContext.newContext( PARAM_ROW_NUMBER, Long.valueOf(rowNumber)), handlerId, baos);
+                    DocProcessContext.newContext( PARAM_ROW_NUMBER, Long.valueOf(rowNumber)), handlerId, os);
+            os.flush();
             // print the output
             Assertions.assertTrue( outputFile.exists() );
             report.append( "\n total output file size : " );
