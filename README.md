@@ -1,5 +1,9 @@
 # venus-sample-huge-source
 
+This is a demo project to test Fugerit Venus Doc generation with huge source document and different handles.
+
+[![Keep a Changelog v1.1.0 badge](https://img.shields.io/badge/changelog-Keep%20a%20Changelog%20v1.1.0-%23E05735)](CHANGELOG.md)
+
 This is a sample project configured using [fj-doc-maven-plugin init plugin](https://venusdocs.fugerit.org/guide/#maven-plugin-goal-init).
 
 ## Quickstart
