@@ -2,8 +2,8 @@
 package test.org.fugerit.java.demo.venussamplehugesource;
 
 import org.fugerit.java.core.io.FileIO;
+import org.fugerit.java.core.util.checkpoint.CheckpointFormatHelper;
 import org.fugerit.java.demo.venussamplehugesource.DocHelper;
-import org.fugerit.java.demo.venussamplehugesource.People;
 
 import org.fugerit.java.doc.base.config.DocConfig;
 import org.fugerit.java.doc.base.process.DocProcessContext;
@@ -12,12 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import lombok.Getter;
-import lombok.AllArgsConstructor;
 
 /**
  * This is a basic example of Fugerit Venus Doc usage,
@@ -45,7 +40,9 @@ class DocHelperTest {
 
     @Test
     void testDocProcess() throws Exception {
+        long startTime = System.currentTimeMillis();
         StringBuilder report = new StringBuilder();
+        CheckpointFormatHelper formatHelper = new CheckpointFormatHelper();
         report.append( "-------------------- Fugerit Venus Doc sample huge source report (begin) --------------------------" );
         String beginMemory = getMem();
         log.info( beginMemory );
@@ -85,6 +82,8 @@ class DocHelperTest {
             log.info( endMemory );
             report.append( "\n memory status (end) : " );
             report.append( endMemory );
+            report.append( "\n total time : " );
+            report.append( formatHelper.formatDuration( System.currentTimeMillis() - startTime ) );
             report.append( "\n-------------------- Fugerit Venus Doc sample huge source report (end) --------------------------\n" );
             FileIO.writeString( report.toString(), reportFile );
             log.info( "output file : {}, report file : {} \n\n{}", outputFile.getName(), reportFile.getName(), report );
