@@ -77,6 +77,9 @@ class DocHelperTest {
                     DocProcessContext.newContext( PARAM_ROW_NUMBER, Long.valueOf(rowNumber)), handlerId, baos);
             // print the output
             Assertions.assertTrue( outputFile.exists() );
+            report.append( "\n total output file size : " );
+            report.append( outputFile.length() );
+            report.append( "\n GENERATION OK!" );
         } finally {
             String endMemory = getMem();
             log.info( endMemory );
