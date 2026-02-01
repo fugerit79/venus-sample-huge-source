@@ -5,6 +5,7 @@ import org.fugerit.java.core.io.FileIO;
 import org.fugerit.java.core.util.checkpoint.CheckpointFormatHelper;
 import org.fugerit.java.demo.venussamplehugesource.DocHelper;
 
+import org.fugerit.java.demo.venussamplehugesource.PDFMergeTool;
 import org.fugerit.java.doc.base.config.DocConfig;
 import org.fugerit.java.doc.base.process.DocProcessContext;
 
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 /**
  * This is a basic example of Fugerit Venus Doc usage,
@@ -34,12 +36,13 @@ class DocHelperTest {
     private static final String PARAM_HANDLER_TYPE = "handlerType";
     private static final String PARAM_HANDLER_ID = "handlerId";
 
+    private static final String PARAM_MERGE_TEST_ITERATIONS = "mergeTestIterations";
+
     private String getMem() {
         return String.format( "max memory: %s, free memory : %s", Runtime.getRuntime().maxMemory(), Runtime.getRuntime().freeMemory() );
     }
 
-    @Test
-    void testDocProcess() throws Exception {
+    private void testWorker( String basePath, String prefix ) throws Exception {
         long startTime = System.currentTimeMillis();
         StringBuilder report = new StringBuilder();
         CheckpointFormatHelper formatHelper = new CheckpointFormatHelper();
@@ -60,8 +63,8 @@ class DocHelperTest {
         report.append( rowNumber );
         log.info( "row number : {} ", rowNumber );
         String fileNameBase = String.format( "output-%s-%s", rowNumber, handlerId.replace("/", "-") );
-        File outputFile = new File("target/", String.format( "%s.%s", fileNameBase, handlerType ) );
-        File reportFile = new File("target/", String.format( "%s.%s", fileNameBase, "txt" ) );
+        File outputFile = new File(basePath, String.format( "%s%s.%s", prefix, fileNameBase, handlerType ) );
+        File reportFile = new File(basePath, String.format( "%s%s.%s", prefix, fileNameBase, "txt" ) );
         outputFile.delete();
         report.append( "\n output file : " );
         report.append( outputFile.getCanonicalPath() );
@@ -94,4 +97,27 @@ class DocHelperTest {
         }
     }
 
+    //@Test
+    void testDocProcess() throws Exception {
+        this.testWorker( "target/", "" );
+    }
+
+    @Test
+    @EnabledIfSystemProperty( named = "enableMergeTest", matches = "true")
+    void mergeTest() throws Exception {
+        String mergeTestIterations = System.getProperty( PARAM_MERGE_TEST_ITERATIONS, "10" );
+        int iterations = Integer.parseInt(mergeTestIterations);
+        log.info( "iterations : {}", iterations );
+        String basePath = "target/input/";
+        File baseFolder = new File( basePath );
+        log.info( "base folder : {} -> mkdirs:{}",  baseFolder.getCanonicalPath(), baseFolder.mkdirs() );
+        for ( int k=0; k<iterations; k++ ) {
+            //this.testWorker( basePath, String.valueOf( 1000+k )+"_" );
+        }
+        File destFile = new File( "target/merged.pdf" );
+        PDFMergeTool.mergeDirectory( basePath, destFile.getAbsolutePath() );
+        log.info( "destFile : {}, size : {}", destFile.getAbsolutePath(),  destFile.length() );
+    }
+
 }
+

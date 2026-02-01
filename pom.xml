@@ -9,6 +9,7 @@
     <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <fj-doc-version>8.17.9</fj-doc-version>
+    <pdfbox-version>3.0.6</pdfbox-version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -38,6 +39,16 @@
       <groupId>org.fugerit.java</groupId>
       <artifactId>fj-doc-mod-openpdf-ext</artifactId>
     </dependency>
+    <dependency>
+       <groupId>org.apache.pdfbox</groupId>
+       <artifactId>pdfbox</artifactId>
+       <version>${pdfbox-version}</version>
+    </dependency>
+      <dependency>
+          <groupId>org.apache.pdfbox</groupId>
+          <artifactId>pdfbox-io</artifactId>
+          <version>${pdfbox-version}</version>
+      </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
