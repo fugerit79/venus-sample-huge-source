@@ -8,7 +8,7 @@
   <properties>
     <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <fj-doc-version>8.17.9</fj-doc-version>
+    <fj-doc-version>8.18.0</fj-doc-version>
     <pdfbox-version>3.0.6</pdfbox-version>
   </properties>
   <dependencyManagement>
